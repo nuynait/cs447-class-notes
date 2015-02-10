@@ -24,11 +24,127 @@
    - using grammar is more expressive
    - some strings cannot express by regular expression
      - e.x. strings with parenthesis?? (不确定)
-** 
 * Page 5
   [[./png/png_000005.png]]
+** TODO Notes
+   - 这里我去弄git了 没听到 帮我补上
 * Page 6
   [[./png/png_000006.png]]
+** TODO Notes
+   - 这里我还是没听 在push Notes
+** TODO Terminals are?
+   - 什么是terminal？ 好像记得不是很对
+     - deposit
+     - debit
+     - $
+     - "
+     - .
+** Can you generate string that satisfy terminal coverage?
+   - deposit 012 $4567.89
+   - debit 000 $0.00
 * Page 7
   [[./png/png_000007.png]]
- 
+** TSC
+   - all the terminal has to be covered
+   - e.x. you want to make sure deposit or debt being generated
+* Page 8
+  [[./png/png_000008.png]]
+** How many terminal?
+   - 14
+** How many productions?
+   - the last line digit has 10 production rules and there are 7 on the top
+   - digit=["0"-"9"] is exactly: digit="0"|"1"|...|"9"
+   - 17
+** TODO How may derivable string?
+* Page 9
+  [[./png/png_000009.png]]
+** Notes 
+* Page 10
+  [[./png/png_000010.png]]
+** Why worry about invalid input?
+   - need to make sure program is robust to include invalid input
+* Page 11
+  [[./png/png_000011.png]]
+** Notes 
+* Page 12
+  [[./png/png_000012.png]]
+** Notes
+   - ... 前面的都没记到 下面是最后一句话- -
+   - you can see that's how you mutate the ground string into some valid input
+* Page 13
+  [[./png/png_000013.png]]
+** Notes
+* Page 14
+  [[./png/png_000014.png]]
+** Notes
+   - if two program observe any differences, we say this test case kill this mutant
+   - we need to make sure the output of mutant is different to those ground string
+** What is killing mutant?
+   - look at example in page 20
+   - in order to kill the mutant, we need to generate a test case that make
+     these two program return different output
+     - both x, y are 0 will make two test case return the *SAME* thing
+       - we say 0, 0 test case does not kill the mutant
+     - what test case will kill the mutant?
+       - 6, 4 (as long as y is not 0 is good)
+   - think what does it mean if 0, 0 does not distinguish the program
+** Why do we need to care about kill mutant
+   - every mutant should mimic the potentially bug that your program have
+   - so if you does not kill the mutant, it means your test case do not have
+     difference and is useless
+   - if your test case can kill a mutant then the test case you generated is the
+     test case that can help you to find out bugs
+* Page 15
+  [[./png/png_000015.png]]
+* Page 16
+  [[./png/png_000016.png]]
+* Page 17
+  [[./png/png_000017.png]]
+* Page 18
+  [[./png/png_000018.png]]
+* Page 19
+  [[./png/png_000019.png]]
+** Only worry about valid mutant
+   - because invalid mutant program cannot compile and do not need to worry
+     about
+* Page 20
+  [[./png/png_000020.png]]
+** What is kill the mutant?
+   - [[*What%20is%20killing%20mutant?][jump to Page 14]] (press ^c^o)
+* Page 21
+  [[./png/png_000021.png]]
+** Why we don't need to worry about those mutant
+   - having this mutant does not add any benefits
+   - pretty much any test case can catch that bug
+   - For Equivalent: equivalent mutants are difficult to prove. If asking you
+     question is these two equivalent, its difficult to answer. Because you can
+     not prove, usually people just give up on this type of mutant
+* Page 22
+  [[./png/png_000022.png]]
+** Notes
+   - here are 6 disjoint mutant
+   - 1, 2, 5. replace one variable with another
+     - form of generic mutation that you can apply
+     - catch issues of a typo 
+   - 2. change operator, less than to greater than
+   - 5. crash immediately, test if that code is reachable or not
+     - if you add crash to every single line, then you can ensure reach-ability
+       of every single line. Its ensure statement coverage in the mutation
+       testing
+   - you can look at the program to see what place I want to test and can
+     generate mutant there.
+** What are smart way to generating mutant
+   - reorder statements
+   - what other thoughts you have when you do in testing you can generate in
+     mutation tests
+   - if you check something is 0 or something is not, you can easily get massed
+* Page 23
+  [[./png/png_000023.png]]
+** Test Concurrency
+   - try to inject sleep statement
+* Page 24
+  [[./png/png_000024.png]]
+** Notes
+   - once you find test case that kill the mutant, you can ignore the
+     mutant. you want to generate the test cases by using mutant kind as another
+     layer technique to help you find them
