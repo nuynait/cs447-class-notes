@@ -1,0 +1,203 @@
+* Page 1
+  [[./png/png_000001.png]]
+* Page 2
+  [[./png/png_000002.png]]
+** Notes
+   - most bug is implementation bug.
+   - your code is not doing what you suppose to do
+   - there is lots of technique that helps you to see if your code match your
+     specification
+   - its the key to know what developers expect, what key specification is!
+* Page 3
+  [[./png/png_000003.png]]
+** assumptions
+   - for example, some numbers needs to be positive, when you assume this you
+     need to make it well documented
+   - malloc always work (always check the return value of the malloc to make
+     sure it doesn't fail)
+** Notes
+   - if we check all specification, its hard
+   - let's focus on one, NULL pointer
+   - there is one simple solution to make sure no NULL pointer, make sure never
+     have null pointer exception
+     - every time you use a pointer, you check if its a NULL pointer
+     - why no body use this method? this will have a performance issue, it will
+       get a huge slow down
+   - so where should you check for null pointer?
+     - you probably need to check when you think it will have a chance to be a
+       NULL pointer
+* Page 4
+  [[./png/png_000004.png]]
+** Notes
+   - when developer left company, or too busy, or maybe you don't even remember
+     what assumption you made
+   - you can look at code itself, code comments, manual pages
+* Page 5
+  [[./png/png_000005.png]]
+* Page 6
+  [[./png/png_000006.png]]
+* Page 7
+  [[./png/png_000007.png]]
+* Page 8
+  [[./png/png_000008.png]]
+** Notes
+   - I don't know who is telling the truth, I just want to find contradiction in
+     codes
+* Page 9
+  [[./png/png_000009.png]]
+** Must 
+   - here is three statements, they are sequential.
+   - here, 100% sure, is p is not null and z is not 0, and x is not protected by
+     l
+   - these are the things you assumed and you listed there and this is very good
+     method to find bugs in the program
+** May 
+   - whenever you called A, you must called B
+* Page 10
+  [[./png/png_000010.png]]
+** Notes
+   - pretty much easy to see there is a conflict in the code
+   - after check, in the name branch, card MUST be Null
+   - if there is an else branch, card MUST NOT be Null
+* Page 11
+  [[./png/png_000011.png]]
+** Use-then-check
+   - check on the bottom is unnecessary
+   - tty->driver_data makes you sure that tty is not null
+   - you are still check if the tty is NULL
+   - or maybe you are unsure about the tty then you may have null pointer access
+     on the top
+** Contradiction/redundant checks
+   - here you are copy pasting lots of code and probably you want to change
+     regbase to bufbase and here you forget to change that
+   - you are checking regbase variable twice.
+* Page 12
+  [[./png/png_000012.png]]
+* Page 13
+  [[./png/png_000013.png]]
+* Page 14
+  [[./png/png_000014.png]]
+** Notes
+   - one rule, always check the return values, but this is not good for
+     performance
+   - they will infer what return values should be check
+   - looking for contradiction.
+** Dynamic tools
+   - if dynamic tools always find a bug, why do we use static approach?
+* Page 15
+  [[./png/png_000015.png]]
+** Notes
+   - check the return value of the function
+* Page 16
+  [[./png/png_000016.png]]
+* Page 17
+  [[./png/png_000017.png]]
+** Notes
+   - see what we can implement in our project
+** Notes
+   - how many times A() B() appears together? 3 times
+   - now assume everything its inter-procedural and you don't expand
+   - sometimes you can see it happens 100 times, you still cares when it does
+     not repeat. This is where confidence helps, so the confidence is 75%.
+** Support({A,D})
+   - let's try support of A, D
+   - Support({A,D})= 3
+   - Confidence({A,D}, {A}) = support({A,D})/support{(A})=3/4
+   - Confidence({A,D}, {D}) = support({A,D})/support{(D)}=3/5=60%
+   - this means you are more confident to see D than A
+* Page 18
+  [[./png/png_000018.png]]
+** Notes
+   - meaning for 75% you will see a bug
+   - when you see D with out A, its not a bug
+* Page 19
+  [[./png/png_000019.png]]
+* Page 20
+  [[./png/png_000020.png]]
+* Page 21
+  [[./png/png_000021.png]]
+* Page 22
+  [[./png/png_000022.png]]
+* Page 23
+  [[./png/png_000023.png]]
+* Page 24
+  [[./png/png_000024.png]]
+** Notes
+   - here in this example, the comments saying that caller must hold instance
+     lock and why is developer not follow the assumption?
+   - sometimes you are pressure by time and you just don't have time see the
+     comments
+   - comments and codes are contradict each other.
+* Page 25
+  [[./png/png_000025.png]]
+* Page 26
+  [[./png/png_000026.png]]
+** Notes
+   - these projects have millions of comments
+   - sometimes in other language not English
+   - there's tool icomment to detect those type of inconsistency
+* Page 27
+  [[./png/png_000027.png]]
+* Page 28
+  [[./png/png_000028.png]]
+* Page 29
+  [[./png/png_000029.png]]
+** Notes
+   - this is talk locking
+   - in this case the comment is correct and the code is wrong
+* Page 30
+  [[./png/png_000030.png]]
+** Notes
+   - in this case, code is correct, but the comment is wrong
+* Page 31
+  [[./png/png_000031.png]]
+* Page 32
+  [[./png/png_000032.png]]
+* Page 33
+  [[./png/png_000033.png]]
+* Page 34
+  [[./png/png_000034.png]]
+** Notes
+   - if you don't know English and some people give you lots of English
+     sentences and after awhile you may understand many English sentences
+* Page 35
+  [[./png/png_000035.png]]
+* Page 36
+  [[./png/png_000036.png]]
+* Page 37
+  [[./png/png_000037.png]]
+* Page 38
+  [[./png/png_000038.png]]
+** Notes
+   - you have automated tool to generate all the execution path in the program,
+     but it is impossible to test all the paths, so what path you want to test
+     first?
+* Page 39
+  [[./png/png_000039.png]]
+* Page 40
+  [[./png/png_000040.png]]
+* Page 41
+  [[./png/png_000041.png]]
+* Page 42
+  [[./png/png_000042.png]]
+* Page 43
+  [[./png/png_000043.png]]
+** Notes
+   - for mobile apps, majority throw apps or doing things in the background.
+   - your mobile apps tells you what your program should do
+* Page 44
+  [[./png/png_000044.png]]
+* Page 45
+  [[./png/png_000045.png]]
+** Notes
+   - you have exception that you don't caught
+   - you want to prioritize the right side one
+* Page 46
+  [[./png/png_000046.png]]
+* Page 47
+  [[./png/png_000047.png]]
+* Page 48
+  [[./png/png_000048.png]]
+* Page 49
+  [[./png/png_000049.png]]
+

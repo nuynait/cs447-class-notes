@@ -1,0 +1,26 @@
+* Start From Page 58
+  - anything before page 54 is on the PDF it self.
+* Page 54
+  [[./png/png_000054.png]]
+* Page 55
+  [[./png/png_000055.png]]
+** [A, B]
+   - we start with draw the graph first
+     [[./pic/pic_000001.png]]
+   - How do we list requirement for test coverage
+     - TR_{EPC} = {[1, 2, 3], [1, 2, 4], [2, 3, 2], [2, 4, 5], [2, 4, 6], [3, 2,
+       3], [3, 2, 4], [4, 5, 6], [4, 6, 1], [5, 6, 1], [6, 1, 7], [6, 1, 2]}
+** What is the Prime Path for this Graph?
+   - Total Number: 15
+   - {[3, 2, 4, 6, 1, 7], [3, 2, 4, 5, 6, 1, 7], [4, 6, 1, 2, 3], [4,5, 6, 1, 2,
+     3], [3, 2, 3], [2, 3, 2], [1, 2, 4, 5, 6, 1], [1, 2, 4, 6, 1], [2, 4, 6, 1,
+     2], [2, 4, 5, 6, 1, 2], [4, 6, 1, 2, 4], [4, 5, 6, 1, 2, 4], [5, 6, 1, 2,
+     4, 5], [6, 1, 2, 4, 6], [6, 1, 2, 4, 5, 6]}
+** [F]: 
+   - achieve node coverage not edge coverage
+   - [1, 2, 3, 2, 4, 5, 6, 1, 7]
+     - Edge [4, 6] is not covered.
+** [G]:
+   - achieve edge coverage but not prime path coverage
+   - [1, 2, 3, 2, 4, 5, 6, 1, 2, 3, 5, 1, 7]
+     - Edge [3, 2, 3] is not covered

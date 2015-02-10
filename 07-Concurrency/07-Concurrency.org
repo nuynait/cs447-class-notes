@@ -1,0 +1,128 @@
+* Page 1
+  [[./png/png_000001.png]]
+* Page 2
+  [[./png/png_000002.png]]
+** Notes
+   - concurrent program bugs hard to detect
+   - most of the time the test case will be correct
+   - you can see what kinds of instructors runs together in order to guess
+     probably they should bounds together
+* Page 3
+  [[./png/png_000003.png]]
+** Output
+   - correct output should be number of threads
+   - 2 thread the output should be 2
+** Bug
+   - there is a bug in the program. What is the bug?
+   - think of two threads exec the same code
+** Blackboard Notes
+   | T1            | T2            |
+   | tmp = counter | tmp = counter |
+   | tmp++         | tmp++         |
+   | counter = tmp | counter= tmp  |
+** Understand the problem
+   - problem occurs on the context switch.
+   - it determine on how schedule runs
+   - If it runs T2 after T1 finished, it will have no problem
+   - if the schedule does a context switch and switch to T2 when T1 just
+     declares tmp = 0, then in T2, tmp = 0 and both thread will get a 1 for the
+     counter at the end.
+   - so it will happen, but your test may not found the problem here.
+** Coding - Detect Bug
+   - valgrind --tool=helgrind ./a.out
+   - add sleep(1) after line number 9
+** Fixing - Protect Shared Variable
+   - add a lock before read the counter
+   - release the lock after read the counter
+   - add a lock before write the counter
+   - release the lock after write the counter
+   - *BUG NOT FIXED*
+*** WHY?
+    - we are implicitly assume that instructions should run atomicly.
+    - however in this example you still can have context switch in the middle.
+    - so this do not help in this situation
+*** How do we actually fixing this bug?
+    - want the program to print two no matter what.
+    - put entire session between the lock instead of only protect the shared
+      variable.
+* Page 4
+  [[./png/png_000004.png]]
+* Page 5
+  [[./png/png_000005.png]]
+** Other Detection Method
+   - randomly add sleep function in your code.
+     - try to inject interruptions
+   - run test a lots of times. 
+     - when run the same tests a lots of times you can:
+       - 1. add sleep in the code
+       - 2. do other stuffs on computer (listen to music, watch video) to
+         increase context switch chance
+* Page 6
+  [[./png/png_000006.png]]
+* Page 7
+  [[./png/png_000007.png]]
+* Page 8
+  [[./png/png_000008.png]]
+** Notes
+   - Force different scheduling
+     - going into operating system kernel
+     - tools allow you to customize your kernel
+** Static Testing
+   - you don't run the program and know you have bugs in the program
+*** Lock-set
+    - scan the code look for shared variables see if it is protected by the
+      *same* lock
+    - you have to at least share one lock
+** Transaction Memory (没听清楚 这部分笔记不全）
+   - using transaction memory can make instead of lock.
+*** Downside of Transaction Memory
+    - if you don't have much conflict, its nice.
+    - if you have lots of conflict, use lock
+* Page 9
+  [[./png/png_000009.png]]
+** Reentrant locks
+   - Reentrant Locks means you acquired lock and you should not acquire it
+     again.
+   - Example next page
+* Page 10
+  [[./png/png_000010.png]]
+* Page 11
+  [[./png/png_000011.png]]
+* Page 12
+  [[./png/png_000012.png]]
+** BUG - DEADLOCK
+   - you can see there is a return statement there
+   - when you return, you didn't unlock!
+* Page 13
+  [[./png/png_000013.png]]
+* Page 14
+  [[./png/png_000014.png]]
+** Notes
+   - every one have their own lock implemented.
+   - so ensure lock in all kinds of codes is impossible
+   - you don't know who locks implemented in their codes
+* Page 15
+  [[./png/png_000015.png]]
+** Notes
+   - Good thing, developer make comments to tell you about locks
+* Page 16
+  [[./png/png_000016.png]]
+** Notes
+   - you do static analysis to see if the code match the comment
+* Page 17
+  [[./png/png_000017.png]]
+* Page 18
+  [[./png/png_000018.png]]
+* Page 19
+  [[./png/png_000019.png]]
+** Interrupt Handler
+   - OS tells interrupt handler to take care of interrupt
+   - This is a common type of dead lock in the operating system
+   - when you lock and get interrupt, there is no way to give the lock back
+** Solve
+   - in lot of place you need to disable interrupt before you go into the
+     critical section
+   - this way the interrupt will not come in when you hold the lock
+* Page 20
+  [[./png/png_000020.png]]
+

@@ -1,0 +1,190 @@
+* Page 1
+  [[./png/png_000001.png]]
+* Page 2
+  [[./png/png_000002.png]]
+** Notes
+   - Definition is where you set the value
+   - you use the value but not change the value
+* Page 3
+  [[./png/png_000003.png]]
+** Notes
+   - if you have a def set that's empty, you should list them
+** Example
+   - for q1, the def set if empty, because is a single if statement, we don't
+     define anything there.
+* Page 4
+  [[./png/png_000004.png]]
+** Reach
+   - very important concept
+   - why do we talk about def and use?
+     - say you use something, but never defined. will that be a problem?
+       - you may get some garbage that used by other programs
+       - a tool like valgrind will help you to find out
+       - ensured in java, not c or c++
+     - who would intentionally use lots of definition, you may have some wasted
+       definition or unreachable code
+** Example at bottom
+   - does definition of n_0 reach the use case in n_2
+     - the definition of n_0 do not reach the use case in n_2 meaning that
+       whatever you change in n_0 do not affect n_2
+   - if we change the definition of x=17 in node 2, will n_0 it reach n_2
+     - no, because there is another definition here
+   - chain effect: the definition in n_0 has a use in n_1 which set the x to 17 and has use in
+     n_2
+* Page 5
+  [[./png/png_000005.png]]
+* Page 6
+  [[./png/png_000006.png]]
+** Def-clear
+   - you have a path from definition to a use
+   - ignore the def node and use node look at all the nodes in between
+   - if there is no other definition of that variable then we say it is
+     def-clear path
+   - talk about one path
+** Reach
+   - given two nodes, say if there exists a path, ...
+* Page 7
+  [[./png/png_000007.png]]
+** Notes
+   - There is two path, there exits one path from n0 to n5 that is define clear
+   - so it reaches
+** Why write in this way?
+   - write a program, as long as it can be reach under some condition, then the
+     define seems reasonable
+* Page 8
+  [[./png/png_000008.png]]
+** du-path
+   - if you have a definition of a variable v, and use of variable v and ask you
+     to find a du-path, between define of variable v and use of variable v, you
+     need to find a simple def-clear path for that
+** Notes
+   - du(n_i, v) is a super set of du(n_i, n_j, v)
+** What is simple path
+   - quick question: what is simple path?
+   - node can only appear once unless the first and last node is same.
+* Page 9
+  [[./png/png_000009.png]]
+** du(n5, u1, x)
+   - simple path, n5, n0, n, u1
+** du(n5, x)
+   - union of those three sets.
+** du(n3, x)
+   - it is impossible to reach n3 to u1, or u0 so only need to focus on n3 to
+     u2.
+* Page 10
+  [[./png/png_000010.png]]
+** Notes
+   - basic level, make sure every def reaches a use. if you have 1 def, and 3
+     uses you only need to reach one of them
+   - next level, set of test requirements should include a du-path from def to
+     all multiple uses, so if you have 1 def, and 3 uses, you need to reach all
+     those uses
+* Page 11
+  [[./png/png_000011.png]]
+** all-defs
+   - anything from 0 to 4 or 0 to 5
+** all-uses
+   - need to have definition to reach all uses
+   - 0 to 4
+   - and 0 to 5
+   - there are two du-path for each use case, but for all uses just need to list
+     one du-path for each use case
+** all-du-path
+   - list all du-path
+** Who is Stronger? Who subsume whom?
+   - ADUPC subsume AUC, subsume, ADC
+* Page 12
+  [[./png/png_000012.png]]
+** ADC
+   - test requirement for ADC:
+     - only one definition, make sure it reach something
+** AUC
+   - what other uses do you have?
+     - n5, so need to add a path that reach n5
+** ADUPC
+   - what other du-path do you have?
+   - even if du-path is a sub-path of another, you sill should list them.
+* Page 13
+  [[./png/png_000013.png]]
+** ADC
+   - {[n5, u0], [n9, n, u1], [n3, u2]}
+   - you need to list all three here, it is a test-set
+   - for answer of ADC, you can pick other path, just one from the three for
+     n5, or 2 for n9
+** AUC
+   - {[n5, u0], [n5, u0, n, u1], [n5, u0, n, u1, u2], [n9, n, u1], [n9, n, u1,
+     u2], [n3, u2]}
+** ADUPC
+   - {[n5, u0], [n5, u0, n, u1], [n5, u0, n, u1, u2], [n9, n, u1], [n9, n, u1,
+     u2], [n3, u2]}
+   - in this case it is same to AUC, 
+* Page 14
+  [[./png/png_000014.png]]
+** tour concept
+   - the subpath you take need to def-clear
+** three criteria
+   - in order them to subsume do we need to make assumptions?
+* Page 15
+  [[./png/png_000015.png]]
+** what is definitions used in your program
+   - what is definitions used in your program?
+     - assignment
+     - method parameter(implicit definition of parameter)
+     - call bar(x) if there is change to x
+     - input of program
+** Notes
+   - first draw the graph and change to define use
+* Page 16
+  [[./png/png_000016.png]]
+** Notes
+   - If def and use are in the same nodes, you normally don't worry about
+     du-path
+     - any test case access that node will test both def and use case
+     - unless the question specifically said that even they are in the same
+       node, you still need to test, then you will need to worry, otherwise, you
+       don't need to worry about that.
+* Page 17
+  [[./png/png_000017.png]]
+** Notes
+   - normally its hard to argue the subsumption relationship between them
+** why PPC subsume ADUPC
+   - prime path cover all the simple path (proved at previous lecture)
+   - test set cover all the prime path means it cover all the simple path of the
+     program
+   - any du-path is simple path. 
+   - therefore, prime path subsume ADUPC
+** Why all-uses coverage subsume edge coverage
+   - does AUC subsume edge coverage? any counterexample? 
+     - [AUC only subsume EC under some assumption, without that assumption,
+       there should be counterexample for AUC subsume EC]
+     - Counterexample: for graph in p12
+       - you can satisfy AUC by test path [n0, n1, n3, n5, n6] and [n0, n2, n3,
+         n5, n6] but do not subsume edge coverage, because n4 and n6 are not
+         covered
+     - Counterexample: 
+       [[./pic/pic-1.png]]
+       - AUC: 123, but do not cover 1, 4 path
+* Page 18
+  [[./png/png_000018.png]]
+** Assumption
+   - you should have use case on each test branch and two branch should have the
+     use case for the same variable
+** Example
+   [[./pic/pic-2.png]]
+** Why under this assumption, AUC will subsumes EC
+   - when you have branch on the two edges, there's no guarantee that both edge
+     will be visited.
+   - 1,2 and 1,4 are branch edge
+   - if that edge is not a branch edge for example, 2-3, then it is necessary
+     that their should be a branch above (otherwise, the program will not have
+     branch)
+* Page 19
+  [[./png/png_000019.png]]
+* Page 20
+  [[./png/png_000020.png]]
+* Page 21
+  [[./png/png_000021.png]]
+* Page 22
+  [[./png/png_000022.png]]
+* Page 23
+  [[./png/png_000023.png]]

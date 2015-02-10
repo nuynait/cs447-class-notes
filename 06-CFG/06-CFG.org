@@ -1,0 +1,89 @@
+* Page 1
+  [[./png/png_000001.png]]
+* Page 2
+  [[./png/png_000002.png]]
+** CFG
+  - if you put every single nodes into the graph, the graph will be too
+    complicated.
+  - if you have node 1 have edge point to node 2, it means after you finish with
+    node 1, you can deal with node 2
+* Page 3
+  [[./png/png_000003.png]]
+** Notes
+   - when you have a branch, after that branch, you will going to have two
+     different flow. (T, F)
+   - you don't have to write the go to since it is for transition
+* Page 4
+  [[./png/png_000004.png]]
+** Notes
+   - all the statement in basic block is all together. when you exec one, you
+     exec all of them.
+   - there is one place you can access (enter) one basic block, this do *not* mean
+     it has one beginning edge.
+* Page 5
+  [[./png/png_000005.png]]
+* Page 6
+  [[./png/png_000006.png]]
+** Notes
+   - you can first see that the first two nodes and bottom two nodes can merge
+     together.
+   - L0 is one basic block has two path, T and F. This does not mean it have two
+     exit point, it still has only one exit point but have two path.
+   - *exit point* means for example, for the bottom basic block, you exit after
+     print(x). that means you can only exit at that point. if you exit at y=y+1,
+     that will have one more exit point. That will not be a basic block anymore
+** Why L0 and the Top Nodes can not merged?
+   - because if you merge the top two nodes, then for node(y=y+1, print(x)) it
+     needs to access to if(y<17). if two nodes merged, you will have two entry
+     point one access to x=5 and one access to L0.
+   - that's why you can not have it merged.
+* Page 7
+  [[./png/png_000007.png]]
+* Page 8
+  [[./png/png_000008.png]]
+** CFG
+   - this is how we create a Control Flow Graph
+   - can we merge anything here?
+   - No.
+* Page 9
+  [[./png/png_000009.png]]
+** Short Circuit:
+   - if the question do not say assume short circuit, then its a very easy graph
+     to have one node to be whole if statement, and a true path and a false
+     path.
+   - now the question said assume short circuit. 
+   - What is short circuit
+     - if the first condition is true, then no need to check the second
+       condition
+     - check second condition only if the first condition is false
+     - most of the modern compiler have this optimization 
+   - So that's why we have the graph in slide (with short circuit turned on)
+* Page 10
+  [[./png/png_000010.png]]
+** Home work
+   - Draw CFG as homework
+* Page 11
+  [[./png/png_000011.png]]
+** Switch Statement
+   - there is a different on the graph where you have break and where you don't
+     have break.
+* Page 12
+  [[./png/png_000012.png]]
+** Fall Through
+   - most time lots of analyses tool that assume fall through as a bug that you
+     forget about the break.
+** Error in Graph
+   - change case K to default 
+   - otherwise, the graph will be different
+* Page 13
+  [[./png/png_000013.png]]
+** Question
+   - Draw the graph with the minimum number of nodes
+   - In this time, you should draw the graph with 7 nodes, (2 and 3 combined
+     together)
+* Page 14
+  [[./png/png_000014.png]]
+* Page 15
+  [[./png/png_000015.png]]
+** Do your own
+   - try to do your own as homework
